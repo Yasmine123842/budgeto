@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Budgeto — suivez vos revenus et vos dépenses, directement dans votre navigateur.">
+  <title>Budgeto — Suivi de dépenses</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">B</span>
+      <h1>Budgeto</h1>
+    </div>
+    <div class="topbar-actions">
+      <label class="month-picker">
+        <span class="sr-only">Mois affiché</span>
+        <input type="month" id="month">
+      </label>
+      <button id="theme-toggle" class="btn ghost" type="button" aria-label="Changer de thème">🌙</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="cards" aria-label="Résumé du mois">
+      <article class="card">
+        <p class="card-label">Revenus</p>
+        <p class="card-value income" id="total-income">0</p>
+      </article>
+      <article class="card">
+        <p class="card-label">Dépenses</p>
+        <p class="card-value expense" id="total-expense">0</p>
+      </article>
+      <article class="card">
+        <p class="card-label">Solde</p>
+        <p class="card-value" id="balance">0</p>
+      </article>
+    </section>
+
+    <div class="grid">
+      <section class="panel">
+        <h2>Nouvelle transaction</h2>
+        <form id="form" autocomplete="off">
+          <div class="segmented" role="radiogroup" aria-label="Type de transaction">
+            <label><input type="radio" name="type" value="expense" checked><span>Dépense</span></label>
+            <label><input type="radio" name="type" value="income"><span>Revenu</span></label>
+          </div>
+
+          <label class="field">
+            <span>Libellé</span>
+            <input type="text" id="label" maxlength="60" placeholder="Ex. : Courses du marché" required>
+          </label>
+
+          <div class="row">
+            <label class="field">
+              <span>Montant</span>
+              <input type="number" id="amount" min="0.01" step="0.01" placeholder="0.00" required>
+            </label>
+            <label class="field">
+              <span>Date</span>
+              <input type="date" id="date" required>
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Catégorie</span>
+            <select id="category"></select>
+          </label>
+
+          <button class="btn primary" type="submit">Ajouter</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>Dépenses par catégorie</h2>
+        <div class="chart-wrap">
+          <svg id="chart" viewBox="0 0 120 120" role="img" aria-label="Répartition des dépenses par catégorie"></svg>
+          <ul id="legend" class="legend"></ul>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Transactions</h2>
+        <button id="export" class="btn ghost" type="button">Exporter en CSV</button>
+      </div>
+      <ul id="list" class="list"></ul>
+      <p id="empty" class="empty">Aucune transaction pour ce mois. Ajoutez-en une pour commencer.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Vos données restent dans votre navigateur (localStorage). Rien n'est envoyé sur un serveur.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
